@@ -6,9 +6,19 @@ describe('AuthController', () => {
   let authController: AuthController;
 
   beforeEach(async () => {
+    const mockUserRepository = {
+      // Add mock methods as needed
+    };
+
     const app: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
-      providers: [AuthService],
+      providers: [
+        AuthService,
+        {
+          provide: 'UserRepository',
+          useValue: mockUserRepository,
+        },
+      ],
     }).compile();
 
     authController = app.get<AuthController>(AuthController);
