@@ -25,7 +25,7 @@ export class AuthService {
     return this.authRepository.save(user);
   }
 
-  async findAllUsers(): Promise<User[]> {
+  async findAll(): Promise<User[]> {
     return this.authRepository.find();
   }
 
