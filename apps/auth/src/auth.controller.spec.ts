@@ -6,7 +6,7 @@ describe('AuthController', () => {
   let authController: AuthController;
 
   beforeEach(async () => {
-    const mockUserRepository = {
+    const mockAuthRepository = {
       // Add mock methods as needed
     };
 
@@ -15,8 +15,8 @@ describe('AuthController', () => {
       providers: [
         AuthService,
         {
-          provide: 'UserRepository',
-          useValue: mockUserRepository,
+          provide: 'authRepository',
+          useValue: mockAuthRepository,
         },
       ],
     }).compile();
