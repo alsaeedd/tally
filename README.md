@@ -1,98 +1,129 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 🧾 Tally - Automated Receipt Processing System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+> **Eliminate manual expense reporting forever.** Snap a photo, get instant extraction of vendor, amount, date, items, and smart categorization powered by Claude AI.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+![Microservices](https://img.shields.io/badge/Architecture-Microservices-brightgreen)
+![NestJS](https://img.shields.io/badge/Framework-NestJS-red)
+![TypeScript](https://img.shields.io/badge/Language-TypeScript-blue)
+![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-336791)
+![Claude AI](https://img.shields.io/badge/AI-Claude%203.5%20Haiku-orange)
 
-## Description
+## 🚀 What This Does
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Tally transforms receipt processing from tedious manual data entry into a seamless automated experience:
 
-## Project setup
+1. **📸 Snap a photo** of any receipt
+2. **🤖 AI extracts everything** - vendor, amount, date, individual items, smart category detection
+3. **💾 Automatically stores** structured data in your database
+4. **📊 Ready for reporting** - no more Excel hell
 
-```bash
-$ npm install
+## 🏗️ Architecture
+
+Clean microservices architecture built for scale:
+
+```
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   API Gateway   │────│  Auth Service   │    │ Receipts Service│
+│   Port: 3000    │    │   Port: 3001    │    │   Port: 3002    │
+│                 │    │                 │    │                 │
+│ • File uploads  │    │ • User reg/auth │    │ • OCR processing│
+│ • HTTP routing  │    │ • JWT tokens    │    │ • Claude AI     │
+│ • Load balancing│    │ • User mgmt     │    │ • Data storage  │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+         │                       │                       │
+         └───────────────────────┼───────────────────────┘
+                                 │
+                    ┌─────────────────┐
+                    │   PostgreSQL    │
+                    │   Database      │
+                    │                 │
+                    │ • Users table   │
+                    │ • Receipts table│
+                    │ • JSONB items   │
+                    └─────────────────┘
 ```
 
-## Compile and run the project
+## 🛠️ Tech Stack
 
-```bash
-# development
-$ npm run start
+- **Framework**: NestJS with TypeScript
+- **Database**: PostgreSQL with TypeORM
+- **AI**: Claude 3.5 Haiku for OCR
+- **Architecture**: TCP-based microservices
+- **File Handling**: Multer for uploads
+- **Validation**: Class-validator pipes
 
-# watch mode
-$ npm run start:dev
+## 📋 Prerequisites
 
-# production mode
-$ npm run start:prod
+- **Node.js** 18+
+- **PostgreSQL** (local or cloud)
+- **Claude API Key** from Anthropic
+
+## 🎯 API Endpoints
+
+### Authentication
+
+```
+POST /auth/create    - Register new user
+GET  /auth/findAll      - List all users
 ```
 
-## Run tests
+### Receipts
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```
+POST /receipts/create        - Upload & process receipt
+GET  /receipts/find        - Get user's receipts
 ```
 
-## Deployment
+## 📊 Sample Response
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Upload a receipt and get instant structured data:
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```json
+{
+  "id": "91ffa900-643d-4a4b-98d4-d09991952eaf",
+  "user_id": "1",
+  "image_path": "hc_receipt_2025_08.jpg",
+  "amount": 4.0,
+  "vendor": "Healthy Calorie",
+  "date": "2019-01-03T00:00:00.000Z",
+  "category": "Food",
+  "items": [
+    { "name": "Chicken Sandwich", "price": 2.3 },
+    { "name": "Orange Juice", "price": 1.7 }
+  ]
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## 🔮 What's Next
 
-## Resources
+On the list of to-dos:
 
-Check out a few resources that may come in handy when working with NestJS:
+- **JWT authentication** with refresh tokens
+- **Export to Ready Email** with customizable templates
+- **Rate limiting** and API security
+- **File storage** to S3/CloudFlare
+- **Docker containers** for easy deployment
+- **API documentation** with Swagger
+- **Monitoring** and logging
+- **Frontend dashboard** for expense management
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## 📈 Scaling Considerations
 
-## Support
+This architecture is built to scale:
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **Horizontal scaling**: Add more instances of any service
+- **Database separation**: Move to service-per-database pattern
+- **Event-driven**: Switch to async message queues (RabbitMQ/Kafka)
+- **API Gateway**: Add authentication, rate limiting, load balancing
 
-## Stay in touch
+## 🤝 Contributing
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Built with ❤️ as a learning project. Feel free to fork and extend!
 
-## License
+## 📄 License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+MIT - Build something amazing!
+
+---
+
+**🎉 From zero to production-grade receipt processing in one day. Alhamdulillah!**
