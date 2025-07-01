@@ -17,6 +17,9 @@ export class Receipt {
   @Column()
   vendor: string;
 
+  @Column('jsonb')
+  items: any[];
+
   @Column('date')
   date: Date;
 
