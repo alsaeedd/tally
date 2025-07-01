@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { Alias } from 'typeorm/query-builder/Alias';
 
 @Injectable()
 export class AuthService {
@@ -10,8 +9,8 @@ export class AuthService {
     return this.authClient.send('auth.findAll', {});
   }
 
-  register() {
-    return this.authClient.send('auth.register', {
+  create() {
+    return this.authClient.send('auth.create', {
       email: 'explodymody@skool.com',
       password: 'daddio',
       companyName: 'raincode',

@@ -5,13 +5,13 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
-  @Get()
+  @Get('find')
   findAll() {
     return this.authService.findAll();
   }
 
-  @Post()
-  register() {
-    return this.authService.register();
+  @Post('create')
+  create() {
+    return this.authService.create();
   }
 }

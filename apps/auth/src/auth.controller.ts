@@ -12,8 +12,8 @@ import { User } from './auth.entity';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @MessagePattern('auth.register')
-  async register(data: {
+  @MessagePattern('auth.create')
+  async create(data: {
     email: string;
     password: string;
     companyName: string;
