@@ -31,7 +31,7 @@ export class ReceiptsService {
             },
             {
               type: 'text',
-              text: `Extract receipt data as JSON: 
+              text: `Extract receipt data as JSON, only send back JSON (no text): 
               {
                 "amount": total_amount,
                 "vendor": business_name,

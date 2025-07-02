@@ -3,36 +3,36 @@ version: '3.8'
 services:
   postgres:
     image: postgres:15
-    container_name: tally_postgres_v0
+    container_name: tally_postgres
     environment:
       POSTGRES_DB: tally_dev
-      POSTGRES_USER: postgresql
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: micro123
-      POSTGRES_HOST_AUTH_METHOD: scram-sha-256
-      POSTGRES_INITDB_ARGS: --auth-host=scram-sha-256
+      POSTGRES_INITDB_ARGS: '--auth-host=md5 --auth-local=md5'
     ports:
       - '5432:5432'
     volumes:
-      - tally_postgres_data_v0:/var/lib/postgresql/data
+      - tally_postgres_data:/var/lib/postgresql/data
+      - ./pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
     restart: unless-stopped
     networks:
-      - tally_network_v0
+      - tally_network
 
   adminer:
     image: adminer:latest
-    container_name: tally_adminer_v0
+    container_name: tally_adminer
     ports:
       - '8080:8080'
     restart: unless-stopped
     depends_on:
       - postgres
     networks:
-      - tally_network_v0
+      - tally_network
 
 volumes:
-  tally_postgres_data_v0:
+  tally_postgres_data:
     driver: local
 
 networks:
-  tally_network_v0:
+  tally_network:
     driver: bridge
