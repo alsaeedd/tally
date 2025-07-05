@@ -5,15 +5,17 @@ import { ClientProxy } from '@nestjs/microservices';
 export class ReceiptsService {
   constructor(@Inject('RECEIPTS_CLIENT') private receiptsClient: ClientProxy) {}
 
-  createReceipt(file: Express.Multer.File) {
+  createReceipt(file: Express.Multer.File, userId: string) {
     return this.receiptsClient.send('receipts.create', {
-      user_id: '1',
+      user_id: userId,
       image_data: file.buffer.toString('base64'),
       filename: file.originalname,
     });
   }
 
-  findReceiptsByUser() {
-    return this.receiptsClient.send('receipts.findReceiptsByUser', {});
+  findReceiptsByUser(userId: string) {
+    return this.receiptsClient.send('receipts.findReceiptsByUser', {
+      user_id: userId,
+    });
   }
 }
