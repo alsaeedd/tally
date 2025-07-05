@@ -9,11 +9,18 @@ export class AuthService {
     return this.authClient.send('auth.findAll', {});
   }
 
-  create() {
-    return this.authClient.send('auth.create', {
-      email: 'explodymody@skool.com',
-      password: 'daddio',
-      companyName: 'raincode',
+  signup(email: string, password: string, company_name: string) {
+    return this.authClient.send('auth.signup', {
+      email,
+      password,
+      company_name,
+    });
+  }
+
+  login(email: string, password: string) {
+    return this.authClient.send('auth.login', {
+      email,
+      password,
     });
   }
 }

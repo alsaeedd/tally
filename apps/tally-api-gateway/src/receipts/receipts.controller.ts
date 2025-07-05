@@ -1,4 +1,5 @@
 import {
+  ClassSerializerInterceptor,
   Controller,
   Get,
   Post,
@@ -8,6 +9,7 @@ import {
 import { ReceiptsService } from './receipts.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('receipts')
 export class ReceiptsController {
   constructor(private receiptsService: ReceiptsService) {}

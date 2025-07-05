@@ -1,27 +1,31 @@
 import {
+  Body,
   ClassSerializerInterceptor,
   Controller,
   UseInterceptors,
 } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AuthService } from './auth.service';
-import { User } from './auth.entity';
+import { User } from './entities/auth.entity';
+import { LoginDto } from './dtos/login.dto';
+import { SignupDto } from './dtos/signup.dto';
 
 @UseInterceptors(ClassSerializerInterceptor)
 @Controller()
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @MessagePattern('auth.create')
-  async create(data: {
-    email: string;
-    password: string;
-    companyName: string;
-  }): Promise<User> {
+  @MessagePattern('auth.login')
+  async login(data: LoginDto) {
+    return this.authService.login(data.email, data.password);
+  }
+
+  @MessagePattern('auth.signup')
+  async signup(data: SignupDto) {
     return this.authService.createUser(
       data.email,
       data.password,
-      data.companyName,
+      data.company_name,
     );
   }
 
